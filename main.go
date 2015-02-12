@@ -1,4 +1,4 @@
-package main
+package main // import "github.com/grange74/where-is-my-server"
 
 import (
 	"encoding/json"
