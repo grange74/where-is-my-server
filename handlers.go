@@ -22,7 +22,10 @@ func WhereIsMyServerHandler(rw http.ResponseWriter, r *http.Request) {
 }
 
 func ServersHandler(rw http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(rw, "All the servers")
+	servers := GetServersFromDB()
+	if err := json.NewEncoder(rw).Encode(servers); err != nil {
+		panic(err)
+	}
 }
 
 func GetServerHandler(rw http.ResponseWriter, r *http.Request) {
@@ -30,7 +33,17 @@ func GetServerHandler(rw http.ResponseWriter, r *http.Request) {
 }
 
 func PostServerHandler(rw http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(rw, "New server created (NOT)!")
+	name := r.FormValue("name")
+	ip := r.FormValue("ip")
+	//TODO check that Name and IP are provided
+
+	server := Server{name, ip}
+
+	AddServerToDB(server)
+
+	if err := json.NewEncoder(rw).Encode(server); err != nil {
+		panic(err)
+	}
 }
 
 func UsersHandler(rw http.ResponseWriter, r *http.Request) {
@@ -43,7 +56,7 @@ func GetUserHandler(rw http.ResponseWriter, r *http.Request) {
 
 	username := mux.Vars(r)["username"]
 
-	user := User{username, username + "@gmail.com"}
+	user := User{username, username + "@gmail.com", "server1"}
 
 	if err := json.NewEncoder(rw).Encode(user); err != nil {
 		panic(err)
