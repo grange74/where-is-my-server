@@ -1,0 +1,39 @@
+#%RAML 0.8
+---
+title: Where is my server
+baseUri: http://localhost:8080/api/{version}
+version: v1
+
+/where-is-my-server:
+  get:
+    description: returns a user and the server it belong to, only if there is an exact match
+
+    queryParameters:
+      email:
+        displayName: Email address
+        type: string
+        description: A user's full email address
+        example: grange74@gmail.com 
+        required: true
+
+/servers:
+  get:
+    description: returns all registered servers
+
+  /{serverName}:
+    get:
+      description: returns the details of a given server
+
+    post:
+      description: creates a new server
+
+    /users:
+      get:
+        description: returns all users for the given server
+
+      /{userId}:
+        get:
+          description: returns the details of a given user
+
+        post:
+          description: registers a new user for the given server
