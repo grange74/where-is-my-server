@@ -2,3 +2,9 @@ gin-bin
 where-is-my-server
 
 *.db
+
+api.html
+
+where-is-my-server.sublime-project
+
+where-is-my-server.sublime-workspace
